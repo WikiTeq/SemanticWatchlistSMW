@@ -35,9 +35,6 @@
 		}
 	},
 	"autoload": {
-		"files" : [
-			"SemanticWatchlist.php"
-		],
 		"psr-4": {
 			"SWL\\": "src/"
 		},
