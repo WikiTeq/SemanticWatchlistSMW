@@ -1,5 +1,7 @@
 <?php
 
+use SMW\DataTypeRegistry;
+
 /**
  * Represents a change to a semantic property.
  *
@@ -40,7 +42,7 @@ class SWLPropertyChange {
 	 * @return SWLPropertyChange
 	 */
 	public static function newFromSerialization( SMWDIProperty $property, $oldValue, $newValue ) {
-		$diType = SMWDataValueFactory::getDataItemId( $property->findPropertyTypeID() );
+		$diType = DataTypeRegistry::getInstance()->getDataItemId( $property->findPropertyTypeID() );
 
 		return new self(
 			is_null( $oldValue ) ? null : SMWDataItem::newFromSerialization( $diType, $oldValue ),

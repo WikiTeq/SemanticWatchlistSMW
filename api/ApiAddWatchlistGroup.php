@@ -13,18 +13,18 @@
  * @author Jeroen De Dauw < jeroendedauw@gmail.com >
  */
 class ApiAddWatchlistGroup extends ApiBase {
-	
+
 	public function __construct( $main, $action ) {
 		parent::__construct( $main, $action );
 	}
-	
+
 	public function execute() {
 		$user = $this->getUser();
-		
+
 		if ( !$user->isAllowed( 'semanticwatchgroups' ) || $user->isBlocked() ) {
-			$this->dieUsageMsg( array( 'badaccess-groups' ) );
-		}			
-		
+			$this->dieWithError( array( 'badaccess-groups' ) );
+		}
+
 		$params = $this->extractRequestParams();
 		$params['customTexts'] = SWLGroup::unserializedCustomTexts( $params['customTexts'] );
 
@@ -37,19 +37,19 @@ class ApiAddWatchlistGroup extends ApiBase {
 			$params['concepts'],
 			$params['customTexts']
 		);
-		
+
 		$this->getResult()->addValue(
 			null,
 			'success',
 			$group->writeToDB()
 		);
-		
+
 		$this->getResult()->addValue(
 			'group',
 			'id',
 			$group->getId()
 		);
-		
+
 		$this->getResult()->addValue(
 			'group',
 			'name',
@@ -90,7 +90,7 @@ class ApiAddWatchlistGroup extends ApiBase {
 			),
 		);
 	}
-	
+
 	public function getParamDescription() {
 		return array(
 			'name' => 'The name of the group, used for display in the user preferences',
@@ -101,7 +101,7 @@ class ApiAddWatchlistGroup extends ApiBase {
 			'customTexts' => 'Custom Text to be sent in Emails',
 		);
 	}
-	
+
 	public function getDescription() {
 		return array(
 			'API module to add semantic watchlist groups.'
@@ -113,10 +113,10 @@ class ApiAddWatchlistGroup extends ApiBase {
 			'api.php?action=addswlgroup&name=My group of awesome&properties=Has awesomeness|Has epicness&categories=Awesome stuff',
 			'api.php?action=addswlgroup&name=My group of awesome&properties=Has awesomeness|Has epicness&categories=Awesome stuff&customTexts=Has awesomeness~true~Changed to awesome now',
 		);
-	}	
-	
+	}
+
 	public function getVersion() {
 		return __CLASS__ . ': $Id$';
-	}		
-	
+	}
+
 }

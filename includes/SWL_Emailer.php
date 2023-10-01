@@ -53,7 +53,7 @@ final class SWLEmailer {
 
 		if ( version_compare( $GLOBALS['wgVersion'], '1.27', '<' ) ) {
 			return UserMailer::send(
-				new MailAddress( $user ),
+				new MailAddress( $user->getEmail() ),
 				new MailAddress( $wgPasswordSender, $wgPasswordSenderName ),
 				$title,
 				$emailText,
@@ -62,7 +62,7 @@ final class SWLEmailer {
 			);
 		} else {
 			return UserMailer::send(
-				new MailAddress( $user ),
+				new MailAddress( $user->getEmail() ),
 				new MailAddress( $wgPasswordSender, $wgPasswordSenderName ),
 				$title,
 				$emailText,

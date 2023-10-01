@@ -52,6 +52,10 @@ class SpecialSemanticWatchlist extends SpecialPage {
 		$wgOut->setPageTitle( $this->getDescription() );
 	}
 
+	private function getTitle() {
+		return $this->getOutput()->getTitle();
+	}
+
 	/**
 	 * Main method.
 	 *

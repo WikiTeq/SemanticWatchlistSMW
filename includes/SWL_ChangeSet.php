@@ -238,12 +238,12 @@ class SWLChangeSet {
 			while ( $dataItem = array_shift( $smallGroup ) ) {
 				$changes->addPropertyObjectChange( $diProperty, new SWLPropertyChange( $dataItem, array_shift( $bigGroup ) ) );
 			}
-			
+
 			// If the bigger group is not-equal to the smaller one, items will be left,
 			// that are either insertions or deletions, depending on the group.
-			if ( count( $bigGroup > 0 ) ) {
+			if ( count( $bigGroup ) > 0 ) {
 				$semanticData = $oldIsBigger ? $deletions : $insertions;
-				
+
 				foreach ( $bigGroup as /* SMWDataItem */ $dataItem ) {
 					$semanticData->addPropertyObjectValue( $diProperty, $dataItem );
 				}				
@@ -574,9 +574,9 @@ class SWLChangeSet {
 				}				
 			}
 		}
-		
-		$dbw->begin( __METHOD__ );
-		
+
+		$dbw->startAtomic( __METHOD__ );
+
 		foreach ( $changes as $change ) {
 			if ( $change['property'] == '' ) {
 				// When removing the last value for a property of a page,
@@ -605,11 +605,11 @@ class SWLChangeSet {
 				)
 			);
 		}
-		
-		$dbw->commit( __METHOD__ );
-		
+
+		$dbw->endAtomic( __METHOD__ );
+
 		Hooks::run( 'SWLAfterChangeSetInsert', array( &$this, $groupsToAssociate, $editId ) );
-		
+
 		return $id;
 	}
 	
