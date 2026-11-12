@@ -14,9 +14,9 @@
 namespace SWL\Special;
 
 use ApiMain;
-use FauxRequest;
+use MediaWiki\Request\FauxRequest;
 use SWL\ChangeSet;
-use HTML;
+use MediaWiki\Html\Html;
 use MediaWiki\MediaWikiServices;
 use Profiler;
 use SpecialPage;
